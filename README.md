@@ -6,10 +6,20 @@
 
 ## Crear el entorno
 1. Clonar el repositorio
-2. Abrir la carpeta del repositorio y abrir una terminal alli
-3. Ejecutar el siguiente comando:
-`conda create --prefix ./conda_env python=3.12`
-4. Crear interprete en pycharm (ahi lo hice yo)
+2. Abrir Anaconda Prompt desde el buscador de windows
+3. Ejecutar:
+
+   `cd C:\<ruta-donde-hayas-clonado-el-repo>\CienciaDeDatos_2025`
+
+   `conda create --prefix ./conda_env python=3.12`
+
+   El conda_env deberia crearse en la carpeta raiz del repositorio
+
+4. Ejecutar el siguiente comando:
+
+   `conda create --prefix ./conda_env python=3.12`
+
+5. Crear interprete en pycharm (ahi lo hice yo)
    1. En la parte inferior derecha veras para seleccionar interprete 
    
    ![imagen1.png](utils/images/imagen1.png)
