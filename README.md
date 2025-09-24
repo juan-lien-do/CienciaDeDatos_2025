@@ -32,4 +32,5 @@
    
     ![imagen3.png](utils/images/imagen3.png)
 
-En el archivo utils/requirements.txt estan las librerias que se instalan aparte de las que trae el conda_env al crearse
+En el archivo utils/requirements.txt estan las librerias que se instalan aparte de las que trae el conda_env al crearse. 
+Si en tu rama creas instalas alguna libreria extra, agregalo para llevar seguimiento de las librerias que se requueriran al mergear al main
