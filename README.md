@@ -32,5 +32,9 @@
    
     ![imagen3.png](utils/images/imagen3.png)
 
+6. OPCIONAL si usas vs code con Copilot:
+   El entorno se activa asi (reemplazar lo que sea conveniente):
+   $ conda activate "DISCO:\carpetas\CienciaDeDatos_2025\conda_env"
+
 En el archivo utils/requirements.txt estan las librerias que se instalan aparte de las que trae el conda_env al crearse. 
 Si en tu rama creas instalas alguna libreria extra, agregalo para llevar seguimiento de las librerias que se requueriran al mergear al main
