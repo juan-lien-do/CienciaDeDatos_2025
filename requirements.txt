@@ -3,3 +3,7 @@ seaborn~=0.13.2
 plotly~=6.3.0
 beautifulsoup4~=4.12.2
 requests~=2.31.0
+neo4j
+transformers
+torch
+sentence-transformers
