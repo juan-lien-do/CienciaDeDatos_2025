@@ -15,12 +15,12 @@ def cluster_news():
     
     try:
         with driver.session() as session:
-            # Obtener noticias de entrenamiento
-            print("Obteniendo noticias de entrenamiento...")
+            # Obtener noticias de entrenamiento con embeddings de títulos
+            print("Obteniendo noticias de entrenamiento con embeddings de títulos...")
             result = session.run("""
                 MATCH (n:Noticia)
-                WHERE n.subset = 'train'
-                RETURN n.url AS url, n.embedding AS embedding
+                WHERE n.subset = 'train' AND n.embedding_titulo IS NOT NULL
+                RETURN n.url AS url, n.embedding_titulo AS embedding
             """)
             
             # Recolectar datos
@@ -42,9 +42,9 @@ def cluster_news():
             X = np.array(embeddings)
             print(f"Shape del array: {X.shape}")
             
-            # Ejecutar K-Means
-            print("Ejecutando K-Means clustering...")
-            kmeans = KMeans(n_clusters=10, random_state=42, n_init=10)
+            # Ejecutar K-Means con 60 clusters basado en embeddings de títulos
+            print("Ejecutando K-Means clustering con 60 clusters...")
+            kmeans = KMeans(n_clusters=60, random_state=42, n_init='auto')
             cluster_labels = kmeans.fit_predict(X)
             
             print("Clustering completado!")
@@ -69,9 +69,9 @@ def cluster_news():
                 processed = min(i + batch_size, total)
                 print(f"Procesadas {processed}/{total} noticias")
             
-            # Contar noticias por clúster
-            print("\n📊 Distribución de noticias por clúster:")
-            for cluster_id in range(10):
+            # Contar noticias por clúster (primeros 10 + resumen)
+            print("\n📊 Distribución de noticias por clúster (mostrando primeros 10):")
+            for cluster_id in range(min(10, 60)):
                 count_result = session.run("""
                     MATCH (n:Noticia)
                     WHERE n.subset = 'train' AND n.cluster_id = $cluster_id
@@ -82,6 +82,14 @@ def cluster_news():
                 percentage = (count / total) * 100
                 print(f"  Clúster {cluster_id}: {count} noticias ({percentage:.1f}%)")
             
+            # Mostrar estadísticas generales de todos los 60 clusters
+            if total > 0:
+                avg_per_cluster = total / 60
+                print(f"\n📈 Estadísticas generales (60 clusters):")
+                print(f"  📊 Promedio por clúster: {avg_per_cluster:.1f} noticias")
+                print(f"  📊 Total distribuido: {total} noticias")
+                print(f"  🎯 Clusters basados en: embeddings de títulos")
+            
             # Guardar el modelo entrenado
             print("\nGuardando modelo K-Means...")
             with open('kmeans_model.pkl', 'wb') as f:
@@ -90,7 +98,8 @@ def cluster_news():
             
             print(f"\n✅ Proceso completado:")
             print(f"   Total de noticias procesadas: {total}")
-            print(f"   Número de clústeres: 10")
+            print(f"   Número de clústeres: 60")
+            print(f"   Basado en: embeddings de títulos")
             print(f"   Modelo guardado: kmeans_model.pkl")
             
     except Exception as e:
