@@ -44,7 +44,7 @@ def cluster_news():
             
             # Ejecutar K-Means
             print("Ejecutando K-Means clustering...")
-            kmeans = KMeans(n_clusters=10, random_state=42, n_init=10)
+            kmeans = KMeans(n_clusters=16, random_state=42, n_init=16)
             cluster_labels = kmeans.fit_predict(X)
             
             print("Clustering completado!")
@@ -71,7 +71,7 @@ def cluster_news():
             
             # Contar noticias por clúster
             print("\n📊 Distribución de noticias por clúster:")
-            for cluster_id in range(10):
+            for cluster_id in range(16):
                 count_result = session.run("""
                     MATCH (n:Noticia)
                     WHERE n.subset = 'train' AND n.cluster_id = $cluster_id
@@ -90,7 +90,7 @@ def cluster_news():
             
             print(f"\n✅ Proceso completado:")
             print(f"   Total de noticias procesadas: {total}")
-            print(f"   Número de clústeres: 10")
+            print(f"   Número de clústeres: 16")
             print(f"   Modelo guardado: kmeans_model.pkl")
             
     except Exception as e:
